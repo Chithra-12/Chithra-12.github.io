@@ -2,43 +2,163 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>For You ❤️</title>
+  <title>Happy Birthday ❤️</title>
+
+  <!-- Clean, reader-friendly font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff0f5;
+      height: 100vh;
+      background: #fdfaf6;
+      font-family: 'Merriweather', serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
       text-align: center;
-      padding-top: 100px;
+      padding: 20px;
+      overflow: hidden;
     }
-    h1 {
+
+    /* TOP */
+    .top {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .heart {
+      display: inline-block;
       color: #e63946;
-      font-size: 2.4rem;
+      animation: heartbeat 1.2s infinite;
+      margin: 0 6px;
     }
-    h2 {
-      font-weight: normal;
-      font-size: 1.5rem;
-      margin-bottom: 40px;
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.2); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
-    button {
-      padding: 12px 26px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 25px;
-      background-color: #e63946;
+
+    /* CENTER */
+    .center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* 🎉 Celebration animation */
+    .celebrate {
+      font-size: 32px;
+      margin-bottom: 12px;
+      animation: popIn 1.2s ease-out forwards;
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* 💋 Kiss animation */
+    .kiss {
+      font-size: 18px;
+      font-weight: 400;
+      color: #555;
+      position: relative;
+      animation: kissFloat 2s ease-in-out infinite;
+    }
+
+    .kiss::after {
+      content: "💋";
+      position: absolute;
+      right: -28px;
+      top: 0;
+      animation: kissPop 2s ease-in-out infinite;
+    }
+
+    @keyframes kissFloat {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes kissPop {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.6;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0.8);
+        opacity: 0.6;
+      }
+    }
+
+    /* BUTTON */
+    .bottom {
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background: #e63946;
       color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      border-radius: 30px;
       cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.2);
     }
   </style>
 </head>
+
 <body>
 
-  <h1>Wishing you a very very happiest birthday, sweetheart 🎂❤️</h1>
-  <h2>Kanmani loves you more 💕</h2>
+  <!-- TOP -->
+  <div class="top">
+    Karthick <span class="heart">❤️</span> Kanmani
+  </div>
 
-  <button onclick="window.location.href='Letter.html'">
-    Read my letter 💌
-  </button>
+  <!-- CENTER -->
+  <div class="center">
+    <div class="celebrate">🎉 Happiest Birthday Wishes Pattu 🎉</div>
+    <div class="kiss">Kanmani loves you more</div>
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="bottom">
+    <button class="btn" onclick="goToLetter()">Read the Letter 💌</button>
+  </div>
+
+  <script>
+    function goToLetter() {
+      window.location.href = "Letter.html";
+    }
+  </script>
 
 </body>
 </html>
