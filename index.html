@@ -15,20 +15,26 @@
       min-height: 100vh;
       background: #fdfaf6;
       font-family: 'Merriweather', serif;
-
       display: flex;
-      justify-content: center;   /* horizontal center */
-      align-items: center;       /* vertical center */
+      justify-content: center;
+      align-items: center;
     }
 
-
+    /* Wrapper (keeps content centered above effects) */
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
 
     /* TOP */
     .top {
       font-size: 18px;
-      text-align: center;
-  }  
-
+    }
 
     .heart {
       display: inline-block;
@@ -38,78 +44,35 @@
     }
 
     @keyframes heartbeat {
-      0% { transform: scale(1); }
-      25% { transform: scale(1.2); }
-      50% { transform: scale(1); }
-      75% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-
-    /* CENTER */
-    .center {
-      margin-bottom: 20px;  
-      }
-
-    .bottom {
-      margin-bottom: 20px;  
+      0%,100% { transform: scale(1); }
+      25%,75% { transform: scale(1.2); }
     }
 
     /* 🎉 Celebration animation */
     .celebrate {
       font-size: 32px;
-      margin-bottom: 12px;
       animation: popIn 1.2s ease-out forwards;
     }
 
     @keyframes popIn {
-      0% {
-        transform: scale(0.7);
-        opacity: 0;
-      }
-      60% {
-        transform: scale(1.1);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1);
-      }
+      0% { transform: scale(0.7); opacity: 0; }
+      60% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
     }
 
     /* 💋 Kiss animation */
     .kiss {
-      font-size: 18px;
-      font-weight: 400;
-      color: #555;
-      position: relative;
+      display: inline-block;
+      margin-left: 6px;
       animation: kissFloat 2s ease-in-out infinite;
     }
 
     @keyframes kissFloat {
-      0% { transform: translateY(0); }
+      0%,100% { transform: translateY(0); }
       50% { transform: translateY(-4px); }
-      100% { transform: translateY(0); }
-    }
-
-    @keyframes kissPop {
-      0% {
-        transform: scale(0.8);
-        opacity: 0.6;
-      }
-      50% {
-        transform: scale(1.2);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(0.8);
-        opacity: 0.6;
-      }
     }
 
     /* BUTTON */
-    .bottom {
-      margin-top: 20px;
-    }
-
     .btn {
       background: #e63946;
       color: white;
@@ -119,26 +82,59 @@
       border-radius: 30px;
       cursor: pointer;
       box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-  }
+    }
 
     .btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-  }
+    }
 
-    .wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 16px; /* controls spacing */
-  }
+    /* ❤️ HEART RAIN */
+    .heart-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
 
+    .rain-heart {
+      position: absolute;
+      top: -20px;
+      color: #e63946;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+
+    /* 🎉 CONFETTI */
+    #confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
   </style>
 </head>
 
 <body>
 
+  <!-- Effects -->
+  <canvas id="confetti"></canvas>
+  <div class="heart-rain"></div>
+
+  <!-- Centered Content -->
   <div class="wrapper">
 
     <div class="top">
@@ -155,6 +151,69 @@
 
   </div>
 
+  <script>
+    function goToLetter() {
+      window.location.href = "Letter.html";
+    }
+
+    /* 🎉 Confetti burst */
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let pieces = [];
+    for (let i = 0; i < 120; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        size: Math.random() * 6 + 4,
+        color: `hsl(${Math.random() * 360}, 70%, 60%)`
+      });
+    }
+
+    let confettiFrames = 120;
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+        p.y += 3;
+      });
+    }
+
+    function animateConfetti() {
+      if (confettiFrames-- > 0) {
+        drawConfetti();
+        requestAnimationFrame(animateConfetti);
+      } else {
+        canvas.style.display = "none";
+      }
+    }
+
+    animateConfetti();
+
+    /* ❤️ Heart rain */
+    const heartContainer = document.querySelector(".heart-rain");
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("rain-heart");
+      heart.innerHTML = "❤️";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (14 + Math.random() * 10) + "px";
+      heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+
+      heartContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }
+
+    setInterval(createHeart, 400);
+  </script>
 
 </body>
 </html>
+
+
