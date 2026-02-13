@@ -15,10 +15,10 @@
       min-height: 100vh;
       background: #fdfaf6;
       font-family: 'Merriweather', serif;
+
       display: flex;
-      justify-content: center;   /* vertical center */
-      align-items: center;       /* horizontal center */
-      text-align: center;
+      justify-content: center;   /* horizontal center */
+      align-items: center;       /* vertical center */
     }
 
 
@@ -26,9 +26,9 @@
     /* TOP */
     .top {
       font-size: 18px;
-      margin-top: 10px;
-      margin-bottom: 30px;
-    }
+      text-align: center;
+  }  
+
 
     .heart {
       display: inline-block;
@@ -127,39 +127,42 @@
       border-radius: 30px;
       cursor: pointer;
       box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+  }
 
     .btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-    }
+  }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px; /* controls spacing */
+  }
+
   </style>
 </head>
 
 <body>
 
-  <!-- TOP -->
-  <div class="top">
-    Karthick <span class="heart">❤️</span> Kanmani
-  </div>
+  <div class="wrapper">
 
-  <!-- CENTER -->
-  <div class="center">
+    <div class="top">
+      Karthick <span class="heart">❤️</span> Kanmani
+    </div>
+
     <div class="celebrate">🎉 Happiest Birthday Wishes Pattu 🎉</div>
-    <p><div class="kiss">Kanmani loves you more</div></p>
-  </div>
 
-  <!-- BOTTOM -->
-  <div class="bottom">
+    <div class="love-line">
+      Kanmani loves you more <span class="kiss">💋</span>
+    </div>
+
     <button class="btn" onclick="goToLetter()">Read the Letter 💌</button>
+
   </div>
 
-  <script>
-    function goToLetter() {
-      window.location.href = "Letter.html";
-    }
-  </script>
 
 </body>
 </html>
