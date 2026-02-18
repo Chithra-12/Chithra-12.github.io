@@ -179,11 +179,14 @@
     <script>
   const music = document.getElementById("bgMusic");
 
-  // Resume music if it was playing on the first page
   if (localStorage.getItem("musicPlaying") === "true") {
-    music.volume = 0.3;
-    music.play().catch(() => {});
+    // wait for user interaction
+    document.body.addEventListener("click", () => {
+      music.volume = 0.3;
+      music.play().catch(() => {});
+    }, { once: true });
   }
 </script>
+
 
 </html>
