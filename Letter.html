@@ -50,7 +50,12 @@
 
 <body>
 
-<div class="letter">
+  <!-- 🎵 Background music -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="letter">
 
   <h1>For You 💖</h1>
   <p>
@@ -171,4 +176,14 @@
   </p>
 
 </body>
+    <script>
+  const music = document.getElementById("bgMusic");
+
+  // Resume music if it was playing on the first page
+  if (localStorage.getItem("musicPlaying") === "true") {
+    music.volume = 0.3;
+    music.play().catch(() => {});
+  }
+</script>
+
 </html>
